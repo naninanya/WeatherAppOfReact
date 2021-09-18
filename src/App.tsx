@@ -1,24 +1,48 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Form from './components/Form'
 import Tilte from './components/Title';
 import './App.css';
 import Results from './components/Results';
 import apikey from './private/apikey.json';
 
+type ResultsStateType = {
+  country: string;
+  cityName: string;
+  temperature: string;
+  conditionText: string;
+  icon: string;
+}
+
 function App() {
   const [city, setCity] = useState<string>("");
-  const getWeather = (e: any) => {
-      e.preventDefault();
-      fetch(`https://api.weatherapi.com/v1/current.json?key=${apikey.weatherkey}&q=London&aqi=no`)
-          .then(res => res.json())
-          .then(data => console.log(data))
+  const [results, setResults] = useState<ResultsStateType>({
+    country: "",
+    cityName: "",
+    temperature: "",
+    conditionText: "",
+    icon: "",
+  });
+
+  const getWeather = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fetch(`https://api.weatherapi.com/v1/current.json?key=${apikey.weatherkey}&q=${city}&aqi=no`)
+      .then(res => res.json())
+      .then(data => {
+        setResults({
+          country: data.location.country,
+          cityName: data.location.name,
+          temperature: data.current.temp_c,
+          conditionText: data.current.condition.text,
+          icon: data.current.condition.icon,
+        })
+      })
   }
 
   return (
     <div className="App">
       <Tilte />
-      <Form setCity={setCity} getWeather={getWeather}/>
-      <Results />
+      <Form setCity={setCity} getWeather={getWeather} />
+      <Results results={results} />
     </div>
   );
 }
