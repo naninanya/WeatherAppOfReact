@@ -19,12 +19,10 @@ body {
 .wrapper {
    width: 100vw;
    height: 100vh;
-   background-color: aqua; 
+   background-color: rgba(6, 223, 243, 0.192); 
    display: flex;
    justify-content: center;
    align-items: center; 
-   background: url("./background-image.jpg") center center no-repeat;
-   background-size: cover;
 }
 
 .container {
@@ -54,7 +52,7 @@ input[type="text"] {
     border-bottom: solid 1px #f15186;
     width: 40%;
     padding-bottom: 4px;
-    color: #fff !important;
+    color: #333 !important;
     font-weight: lighter;
     letter-spacing: 2px;
     margin-bottom: 30px;
